@@ -1,5 +1,7 @@
 package com.mohan.fargoeventboard.data;
 
+import android.content.SharedPreferences;
+
 import com.mohan.fargoeventboard.services.AppWebService;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,15 +22,19 @@ public class AppRepository {
     //Minutes in the past at which the refresh functions should call the web server again.
     private static int REFRESH_LIMIT = 3;
 
+    private static final String LOGIN_TOKEN_PREF = "TOKEN_PREF";
+
     private final EventDao eventDao;
     private final AppWebService webService;
     private final Executor executor;
+    private final SharedPreferences sharedPreferences;
 
     @Inject
-    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor){
+    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor, SharedPreferences sharedPreferences){
         this.webService = webService;
         this.eventDao = eventDao;
         this.executor = executor;
+        this.sharedPreferences = sharedPreferences;
     }
 
     /**
@@ -108,5 +114,25 @@ public class AppRepository {
                 }
             });
         });
+    }
+
+    private void login(String username, String password){
+        executor.execute(() -> {
+            webService.login(username, password).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    sharedPreferences.edit().putString(LOGIN_TOKEN_PREF, response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+        });
+    }
+
+    private void logout(){
+        sharedPreferences.edit().remove(LOGIN_TOKEN_PREF);
     }
 }
