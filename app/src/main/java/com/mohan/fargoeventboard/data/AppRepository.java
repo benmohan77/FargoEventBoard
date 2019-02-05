@@ -27,14 +27,15 @@ public class AppRepository {
     private final EventDao eventDao;
     private final AppWebService webService;
     private final Executor executor;
-    private final SharedPreferences sharedPreferences;
+
+//    @Inject
+//    public SharedPreferences sharedPreferences;
 
     @Inject
-    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor, SharedPreferences sharedPreferences){
+    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor){
         this.webService = webService;
         this.eventDao = eventDao;
-        this.executor = executor;
-        this.sharedPreferences = sharedPreferences;
+        this.executor = executor;;
     }
 
     /**
@@ -116,12 +117,12 @@ public class AppRepository {
         });
     }
 
-    private void login(String username, String password){
+    public void login(String username, String password){
         executor.execute(() -> {
             webService.login(username, password).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    sharedPreferences.edit().putString(LOGIN_TOKEN_PREF, response.body());
+          //          sharedPreferences.edit().putString(LOGIN_TOKEN_PREF, response.body());
                 }
 
                 @Override
@@ -132,7 +133,7 @@ public class AppRepository {
         });
     }
 
-    private void logout(){
-        sharedPreferences.edit().remove(LOGIN_TOKEN_PREF);
+    public void logout(){
+       // sharedPreferences.edit().remove(LOGIN_TOKEN_PREF);
     }
 }

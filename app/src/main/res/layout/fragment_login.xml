@@ -25,7 +25,6 @@
         android:layout_marginLeft="@dimen/input_lr_margin"
         android:layout_marginTop="@dimen/input_margin"
         android:layout_marginRight="@dimen/input_lr_margin"
-        android:="center_horizontal"
         android:background="@drawable/input_background"
         android:ems="10"
         android:inputType="textPersonName"

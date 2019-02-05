@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.mohan.fargoeventboard.R;
+import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
+
+import javax.inject.Inject;
 
 
 public class LoginFragment extends Fragment {
@@ -22,13 +26,16 @@ public class LoginFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     @BindView(R.id.username)
-    private EditText usernameInput;
+    public EditText usernameInput;
 
     @BindView(R.id.password)
-    private EditText passwordInput;
+    public EditText passwordInput;
 
     @BindView(R.id.login_btn)
-    private Button loginButton;
+    public Button loginButton;
+
+    @Inject
+    private LoginViewModel viewModel;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -51,13 +58,17 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        ButterKnife.bind(this, view );
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                viewModel.handleLogin(usernameInput.getText().toString(), passwordInput.getText().toString());
             }
         });
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return view;
     }
 
     @Override
