@@ -44,6 +44,7 @@ public class LoginFragment extends Fragment {
     ViewModelProvider.Factory viewModelFactory;
 
     private LoginViewModel viewModel;
+    private View view;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -68,7 +69,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view );
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +86,7 @@ public class LoginFragment extends Fragment {
 
             }
         });
+
         return view;
     }
 
@@ -93,6 +95,9 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstnaceState);
         AndroidSupportInjection.inject(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
+        if(viewModel.getLoginStatus()){
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_eventListFragment);
+        }
     }
 
     @Override
