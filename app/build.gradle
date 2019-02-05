@@ -1,10 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.mohan.fargoeventboard"
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -22,6 +26,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
@@ -35,9 +41,20 @@ dependencies {
 
     //Dagger 2
     implementation 'com.google.dagger:dagger-android:2.21'
-    implementation 'com.google.dagger:dagger-android-support:2.21' // if you use the support libraries
+    implementation 'com.google.dagger:dagger-android-support:2.21'
+    // if you use the support libraries
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.21'
 
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Room (use 1.1.0-alpha2 for latest alpha)
+    implementation 'androidx.room:room-runtime:2.0.0-beta01'
+    annotationProcessor 'androidx.room:room-compiler:2.0.0-beta01'
+
+    //Navigation
+    def nav_version = "1.0.0-beta01"
+
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
 }
