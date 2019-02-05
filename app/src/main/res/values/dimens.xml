@@ -5,4 +5,9 @@
     <dimen name="login_input">224dp</dimen>
     <dimen name="input_margin">24dp</dimen>
     <dimen name="input_lr_margin">12dp</dimen>
+    <dimen name="image_min">64dp</dimen>
+    <dimen name="image_margin">16dp</dimen>
+    <dimen name="event_text_margin">24dp</dimen>
+    <dimen name="event_title_size">16sp</dimen>
+    <dimen name="event_date_margin">10dp</dimen>
 </resources>

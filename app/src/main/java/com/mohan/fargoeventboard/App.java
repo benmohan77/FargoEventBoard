@@ -4,18 +4,23 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
-import com.mohan.fargoeventboard.dagger2.AppComponent;
+import com.mohan.fargoeventboard.dagger2.DaggerAppComponent;
 
 import javax.inject.Inject;
 
-import dagger.android.AndroidInjector;
+import androidx.fragment.app.Fragment;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
-public class App extends Application implements HasActivityInjector {
+
+public class App extends Application implements HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> fragmentDispatchingAndroidInjector;
 
     public static Context context;
 
@@ -31,8 +36,12 @@ public class App extends Application implements HasActivityInjector {
         return dispatchingAndroidInjector;
     }
 
+    @Override
+    public DispatchingAndroidInjector<Fragment> supportFragmentInjector(){
+        return fragmentDispatchingAndroidInjector;
+    }
+
     private void initDagger(){
-        
-       // AppComponent.builder().application(this).build().inject(this);
+        DaggerAppComponent.builder().application(this).build().inject(this);
     }
 }

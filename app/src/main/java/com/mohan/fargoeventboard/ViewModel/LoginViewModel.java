@@ -15,8 +15,11 @@ public class LoginViewModel extends ViewModel {
         this.appRepository = appRepository;
     }
 
-    public boolean handleLogin(String username, String password){
-        appRepository.login(username, password);
-        return true;
+    public void handleLogin(String username, String password, AppRepository.LoginCallback loginCallback){
+        appRepository.login(username, password, loginCallback);
+    }
+
+    public boolean getLoginStatus(){
+        return appRepository.getLoginStatus();
     }
 }

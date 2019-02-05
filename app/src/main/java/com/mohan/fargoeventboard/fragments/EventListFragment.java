@@ -3,19 +3,28 @@ package com.mohan.fargoeventboard.fragments;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
+import dagger.android.support.AndroidSupportInjection;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mohan.fargoeventboard.R;
+import com.mohan.fargoeventboard.ViewModel.EventListViewModel;
+import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
+import com.mohan.fargoeventboard.data.Event;
 import com.mohan.fargoeventboard.fragments.dummy.DummyContent;
 import com.mohan.fargoeventboard.fragments.dummy.DummyContent.DummyItem;
 
+import javax.inject.Inject;
+
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of Events.
  * <p/>
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
@@ -24,6 +33,11 @@ public class EventListFragment extends Fragment {
 
     private OnListFragmentInteractionListener mListener;
 
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
+    private EventListViewModel viewModel;
+    private RecyclerView recyclerView;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -35,8 +49,6 @@ public class EventListFragment extends Fragment {
     @SuppressWarnings("unused")
     public static EventListFragment newInstance(int columnCount) {
         EventListFragment fragment = new EventListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -49,14 +61,23 @@ public class EventListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_event_list, container, false);
-
-        // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setAdapter(new EventRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView = (RecyclerView) view;
         }
         return view;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        AndroidSupportInjection.inject(this);
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(EventListViewModel.class);
+        viewModel.getEvents().observe(this, events -> {
+            recyclerView.setAdapter(new EventRecyclerViewAdapter(events, mListener));
+        });
+
     }
 
 
@@ -77,18 +98,7 @@ public class EventListFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Event event);
     }
 }

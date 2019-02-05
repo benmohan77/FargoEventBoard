@@ -2,25 +2,28 @@ package com.mohan.fargoeventboard.services;
 
 import com.mohan.fargoeventboard.data.Event;
 import com.mohan.fargoeventboard.data.Speaker;
+import com.mohan.fargoeventboard.data.ResponseToken;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface AppWebService {
 
-    @POST("/login?Username={username}&Password={password}")
-    Call<String> login(@Path("username") String username, @Path("password") String password);
+    @POST("/api/v1/login")
+    Call<ResponseToken> login(@Query("Username") String username, @Query("Password") String password);
 
-    @GET("/events")
-    Call<List<Event>> listEvents();
+    @GET("/api/v1/events")
+    Call<List<Event>> listEvents(@Header("Authorization") String token);
 
-    @GET("events?id={id}")
-    Call<Event> getEvent(@Path("id") String id);
+    @GET("/api/v1/events?id={id}")
+    Call<Event> getEvent(@Path("id") String id, @Header("Authorization") String token);
 
-    @GET("speakers?id={id}")
-    Call<List<Speaker>> getSpeakers(@Path("id") String id);
+    @GET("/api/v1/speakers?id={id}")
+    Call<List<Speaker>> getSpeakers(@Path("id") String id, @Header("Authorization") String token);
 }

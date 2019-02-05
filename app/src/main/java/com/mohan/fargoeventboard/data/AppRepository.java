@@ -13,8 +13,9 @@ import javax.inject.Singleton;
 
 import androidx.lifecycle.LiveData;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.mohan.fargoeventboard.MainActivity.LOGIN_TOKEN_PREF;
 
 @Singleton
 public class AppRepository {
@@ -22,20 +23,19 @@ public class AppRepository {
     //Minutes in the past at which the refresh functions should call the web server again.
     private static int REFRESH_LIMIT = 3;
 
-    private static final String LOGIN_TOKEN_PREF = "TOKEN_PREF";
 
     private final EventDao eventDao;
     private final AppWebService webService;
     private final Executor executor;
 
-//    @Inject
-//    public SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreferences;
 
     @Inject
-    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor){
+    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor, SharedPreferences sharedPreferences){
         this.webService = webService;
         this.eventDao = eventDao;
-        this.executor = executor;;
+        this.executor = executor;
+        this.sharedPreferences = sharedPreferences;
     }
 
     /**
@@ -79,7 +79,7 @@ public class AppRepository {
             boolean eventExists = (eventDao.hasEvent(eventId, calculateRefreshTime(new Date())) != null);
 
             if(!eventExists){
-                webService.getEvent(eventId).enqueue(new Callback<Event>() {
+                webService.getEvent(eventId, getStoredToken()).enqueue(new retrofit2.Callback<Event>() {
                     @Override
                     public void onResponse(Call<Event> call, Response<Event> response) {
                         executor.execute(() -> {
@@ -101,11 +101,13 @@ public class AppRepository {
      */
     private void refreshAllEvents(){
         executor.execute(() -> {
-            webService.listEvents().enqueue(new Callback<List<Event>>() {
+            webService.listEvents(getStoredToken()).enqueue(new retrofit2.Callback<List<Event>>() {
                 @Override
                 public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
                     executor.execute(() -> {
-                        eventDao.insertEvents(response.body());
+                        if(response.body() != null){
+                            eventDao.insertEvents(response.body());
+                        }
                     });
                 }
 
@@ -117,23 +119,39 @@ public class AppRepository {
         });
     }
 
-    public void login(String username, String password){
+    public interface LoginCallback {
+        void onResponse(Boolean success);
+    }
+
+    public void login(String username, String password, final LoginCallback loginCallback){
         executor.execute(() -> {
-            webService.login(username, password).enqueue(new Callback<String>() {
+            webService.login(username, password).enqueue(new retrofit2.Callback<ResponseToken>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-          //          sharedPreferences.edit().putString(LOGIN_TOKEN_PREF, response.body());
+                public void onResponse(Call<ResponseToken> call, Response<ResponseToken> response) {
+                    SharedPreferences.Editor sharedPrefsEdit = sharedPreferences.edit();
+                    sharedPrefsEdit.putString(LOGIN_TOKEN_PREF, response.body().getToken());
+                    sharedPrefsEdit.commit();
+                    loginCallback.onResponse(true);
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
+                public void onFailure(Call<ResponseToken> call, Throwable t) {
+                    loginCallback.onResponse(false);
                 }
             });
         });
     }
 
+    public boolean getLoginStatus(){
+        return !sharedPreferences.getString(LOGIN_TOKEN_PREF, "").isEmpty();
+    }
+
     public void logout(){
-       // sharedPreferences.edit().remove(LOGIN_TOKEN_PREF);
+        sharedPreferences.edit().remove(LOGIN_TOKEN_PREF);
+    }
+
+    private String getStoredToken(){
+        String temp = sharedPreferences.getString(LOGIN_TOKEN_PREF, "");
+        return temp;
     }
 }

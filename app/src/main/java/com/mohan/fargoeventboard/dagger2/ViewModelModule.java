@@ -1,5 +1,6 @@
 package com.mohan.fargoeventboard.dagger2;
 
+import com.mohan.fargoeventboard.ViewModel.EventListViewModel;
 import com.mohan.fargoeventboard.ViewModel.FactoryViewModel;
 import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
 
@@ -13,10 +14,16 @@ import dagger.multibindings.IntoMap;
 public abstract class ViewModelModule {
 
     @Binds
+    abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);
+
+    @Binds
     @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
 
     @Binds
-    abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);
+    @IntoMap
+    @ViewModelKey(EventListViewModel.class)
+    abstract ViewModel bindEventListViewModel(EventListViewModel eventListViewModel);
+
 }

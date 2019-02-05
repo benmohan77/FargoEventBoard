@@ -16,7 +16,7 @@ public interface EventDao {
     @Insert(onConflict = REPLACE)
     void insertEvent(Event event);
 
-    @Insert
+    @Insert(onConflict = REPLACE)
     void insertEvents(List<Event> eventList);
 
     @Query("SELECT * FROM event WHERE id = :eventId")
