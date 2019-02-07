@@ -20,13 +20,13 @@ public interface EventDao {
     void insertEvents(List<Event> eventList);
 
     @Query("SELECT * FROM event WHERE id = :eventId")
-    LiveData<Event> load(String eventId);
+    LiveData<Event> load(int eventId);
 
     @Query("SELECT * FROM event")
     LiveData<List<Event>> loadAll();
 
     @Query("SELECT * FROM event WHERE id = :eventId AND lastRefresh > :lastRefreshMax LIMIT 1")
-    Event hasEvent(String eventId, Date lastRefreshMax);
+    Event hasEvent(int eventId, Date lastRefreshMax);
 
 
     

@@ -1,5 +1,6 @@
 package com.mohan.fargoeventboard.dagger2;
 
+import com.mohan.fargoeventboard.fragments.EventFragment;
 import com.mohan.fargoeventboard.fragments.EventListFragment;
 import com.mohan.fargoeventboard.fragments.LoginFragment;
 
@@ -13,4 +14,7 @@ public abstract class FragmentModule {
 
     @ContributesAndroidInjector
     abstract EventListFragment contributeEventListFragment();
+
+    @ContributesAndroidInjector
+    abstract EventFragment contributeEventFragment();
 }

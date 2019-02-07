@@ -1,6 +1,7 @@
 package com.mohan.fargoeventboard.dagger2;
 
 import com.mohan.fargoeventboard.ViewModel.EventListViewModel;
+import com.mohan.fargoeventboard.ViewModel.EventViewModel;
 import com.mohan.fargoeventboard.ViewModel.FactoryViewModel;
 import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
 
@@ -20,6 +21,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(LoginViewModel.class)
     abstract ViewModel bindLoginViewModel(LoginViewModel loginViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(EventViewModel.class)
+    abstract ViewModel bindEventViewModel(EventViewModel eventViewModel);
 
     @Binds
     @IntoMap

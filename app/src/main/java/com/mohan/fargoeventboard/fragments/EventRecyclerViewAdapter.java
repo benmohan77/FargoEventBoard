@@ -1,6 +1,7 @@
 package com.mohan.fargoeventboard.fragments;
 
 import androidx.lifecycle.LiveData;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.List;
 
-public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.ViewHolder> {
+public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.ViewHolder>{
 
     private List<Event> mValues;
     private final OnListFragmentInteractionListener mListener;
@@ -50,7 +51,8 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
         public final ImageView mImageView;
         public final TextView mTitleView;
@@ -65,11 +67,19 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             mTitleView = (TextView) view.findViewById(R.id.event_title);
             mStartDateView = (TextView) view.findViewById(R.id.event_start_date);
             mEndDateView = (TextView) view.findViewById(R.id.event_end_date);
+            view.setOnClickListener(this);
         }
 
         @Override
         public String toString() {
             return super.toString() + " '" + mTitleView.getText() + "'";
+        }
+
+        @Override
+        public void onClick(View view) {
+            EventListFragmentDirections.ActionEventListFragmentToEventFragment action =  EventListFragmentDirections.actionEventListFragmentToEventFragment();
+            action.setEventId(mItem.getId());
+            Navigation.findNavController(view).navigate(action);
         }
     }
 }

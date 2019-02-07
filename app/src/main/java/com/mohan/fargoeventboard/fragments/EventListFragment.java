@@ -45,9 +45,7 @@ public class EventListFragment extends Fragment {
     public EventListFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static EventListFragment newInstance(int columnCount) {
+    public static EventListFragment newInstance() {
         EventListFragment fragment = new EventListFragment();
         return fragment;
     }
@@ -80,23 +78,6 @@ public class EventListFragment extends Fragment {
 
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Event event);

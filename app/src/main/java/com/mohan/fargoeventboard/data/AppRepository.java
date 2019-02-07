@@ -3,6 +3,8 @@ package com.mohan.fargoeventboard.data;
 import android.content.SharedPreferences;
 
 import com.mohan.fargoeventboard.services.AppWebService;
+
+import java.io.Console;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +45,7 @@ public class AppRepository {
      * @param eventId
      * @return The corresponding event
      */
-    public LiveData<Event> getEvent(String eventId){
+    public LiveData<Event> getEvent(int eventId){
         refreshEvent(eventId);
         return eventDao.load(eventId);
     }
@@ -74,7 +76,7 @@ public class AppRepository {
      * If not, it fetches the corresponding event.
      * @param eventId
      */
-    private void refreshEvent(final String eventId){
+    private void refreshEvent(final int eventId){
         executor.execute(() -> {
             boolean eventExists = (eventDao.hasEvent(eventId, calculateRefreshTime(new Date())) != null);
 
@@ -90,7 +92,9 @@ public class AppRepository {
                     }
 
                     @Override
-                    public void onFailure(Call<Event> call, Throwable t) {}
+                    public void onFailure(Call<Event> call, Throwable t) {
+                        System.out.println(t.toString());
+                    }
                 });
             }
         });

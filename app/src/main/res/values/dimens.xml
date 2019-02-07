@@ -10,4 +10,5 @@
     <dimen name="event_text_margin">24dp</dimen>
     <dimen name="event_title_size">16sp</dimen>
     <dimen name="event_date_margin">10dp</dimen>
+    <dimen name="recycler_view_height">400dp</dimen>
 </resources>

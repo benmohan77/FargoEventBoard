@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements LoginFragment.OnF
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         sharedPreferences.getString(LOGIN_TOKEN_PREF, "");
         setSupportActionBar(toolbar);
-        this.setTitle(R.string.Events);
     }
 
     @Override

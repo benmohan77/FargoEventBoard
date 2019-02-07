@@ -21,9 +21,9 @@ public interface AppWebService {
     @GET("/api/v1/events")
     Call<List<Event>> listEvents(@Header("Authorization") String token);
 
-    @GET("/api/v1/events?id={id}")
-    Call<Event> getEvent(@Path("id") String id, @Header("Authorization") String token);
+    @GET("/api/v1/events")
+    Call<Event> getEvent(@Query("id") int id, @Header("Authorization") String token);
 
-    @GET("/api/v1/speakers?id={id}")
-    Call<List<Speaker>> getSpeakers(@Path("id") String id, @Header("Authorization") String token);
+    @GET("/api/v1/speakers={id}")
+    Call<List<Speaker>> getSpeakers(@Query("id") String id, @Header("Authorization") String token);
 }
