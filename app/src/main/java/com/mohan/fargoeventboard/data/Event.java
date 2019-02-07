@@ -24,6 +24,9 @@ public class Event {
     private String image_url;
 
     @Expose
+    private String event_description;
+
+    @Expose
     private Date start_date_time;
 
     @Expose
@@ -97,5 +100,13 @@ public class Event {
 
     public void setStart_date_time(Date start_date_time) {
         this.start_date_time = start_date_time;
+    }
+
+    public String getEvent_description() {
+        return event_description;
+    }
+
+    public void setEvent_description(String event_description) {
+        this.event_description = event_description;
     }
 }

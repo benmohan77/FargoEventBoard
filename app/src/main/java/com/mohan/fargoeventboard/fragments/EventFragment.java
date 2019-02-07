@@ -85,6 +85,7 @@ public class EventFragment extends Fragment {
         viewModel.getEvent(eventId).observe(this, event -> {
             Picasso.get().load(event.getImage_url()).into(imageView);
             titleTextView.setText(event.getTitle());
+            descriptionTextView.setText(event.getEvent_description());
             startDateTextView.setText(event.getStart_date_time().toString());
             endDateTextView.setText(event.getEnd_date_time().toString());
             locationTextView.setText(event.getLocation());
