@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import com.mohan.fargoeventboard.data.AppDatabase;
 import com.mohan.fargoeventboard.data.AppRepository;
 import com.mohan.fargoeventboard.data.EventDao;
+import com.mohan.fargoeventboard.data.SpeakerDao;
 import com.mohan.fargoeventboard.services.AppWebService;
 
 import java.util.concurrent.Executor;
@@ -39,14 +40,18 @@ public class AppModule {
     EventDao provideEventDao(AppDatabase database){return database.eventDao();}
 
     @Provides
+    @Singleton
+    SpeakerDao provideSpeakerDao(AppDatabase database){return database.speakerDao();}
+
+    @Provides
     Executor provideExecutor() {
         return Executors.newSingleThreadExecutor();
     }
 
     @Provides
     @Singleton
-    AppRepository provideAppRepository(AppWebService webService, EventDao dao, Executor executor, Application application){
-        return new AppRepository(webService, dao, executor, application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE));
+    AppRepository provideAppRepository(AppWebService webService, EventDao dao, SpeakerDao speakerDao, Executor executor, Application application){
+        return new AppRepository(webService, dao, speakerDao, executor, application.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE));
     }
 
     private static String BASE_URL = "https://challenge.myriadapps.com";

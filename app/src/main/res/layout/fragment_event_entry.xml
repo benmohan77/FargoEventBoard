@@ -19,32 +19,22 @@
         android:layout_marginTop="@dimen/event_text_margin"
         android:layout_toEndOf="@id/event_image"
         android:text="Title"
-        android:textSize="@dimen/event_title_size"
-        android:textStyle="bold" />
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/event_title_size"/>
     <TextView
         android:id="@+id/event_start_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/event_image"
         android:layout_below="@id/event_title"
-        android:text="08/07/1997 : 5:00pm"/>
+        android:text="08/07/1997 : 5:00pm"
+        android:textColor="@android:color/secondary_text_light"/>
 
-    <TextView
-        android:id="@+id/event_dash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/event_title"
-        android:layout_marginLeft="@dimen/event_date_margin"
-        android:layout_marginRight="@dimen/event_date_margin"
-        android:layout_toEndOf="@id/event_start_date"
-        android:text="-" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_alignParentBottom="true"/>
 
-    <TextView
-        android:id="@+id/event_end_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/event_title"
-        android:layout_toEndOf="@id/event_dash"
-        android:text="08/07/1997 : 5:00pm" />
 
 </RelativeLayout>

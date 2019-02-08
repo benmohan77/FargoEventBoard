@@ -15,6 +15,7 @@ import dagger.android.support.AndroidSupportInjection;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,17 +42,14 @@ public class EventFragment extends Fragment {
     @BindView(R.id.event_detail_title)
     TextView titleTextView;
 
-    @BindView(R.id.event_detail_start_date)
-    TextView startDateTextView;
-
-    @BindView(R.id.event_detail_end_date)
-    TextView endDateTextView;
+    @BindView(R.id.event_detail_date)
+    TextView dateTextView;
 
     @BindView(R.id.event_detail_desc)
     TextView descriptionTextView;
 
-    @BindView(R.id.event_detail_loc)
-    TextView locationTextView;
+    @BindView(R.id.location_btn)
+    Button locationButton;
 
     public EventFragment() {
         // Required empty public constructor
@@ -86,9 +84,8 @@ public class EventFragment extends Fragment {
             Picasso.get().load(event.getImage_url()).into(imageView);
             titleTextView.setText(event.getTitle());
             descriptionTextView.setText(event.getEvent_description());
-            startDateTextView.setText(event.getStart_date_time().toString());
-            endDateTextView.setText(event.getEnd_date_time().toString());
-            locationTextView.setText(event.getLocation());
+            dateTextView.setText(event.getPrettyDate());
+            locationButton.setText(event.getLocation());
         });
 
     }

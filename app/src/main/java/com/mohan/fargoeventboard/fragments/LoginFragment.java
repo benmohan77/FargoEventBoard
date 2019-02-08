@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +70,6 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view );
 
@@ -79,7 +80,7 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(Boolean success) {
                         if(success){
-                            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_eventListFragment);
+                          NavigateAndPop(view);
                         }
                     }
                 });
@@ -91,12 +92,12 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstnaceState){
-        super.onActivityCreated(savedInstnaceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
         AndroidSupportInjection.inject(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(LoginViewModel.class);
         if(viewModel.getLoginStatus()){
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_eventListFragment);
+            NavigateAndPop(view);
         }
     }
 
@@ -111,10 +112,26 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    private void NavigateAndPop(View view){
+        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_eventListFragment);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
     public interface OnFragmentInteractionListener {

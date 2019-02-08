@@ -14,12 +14,14 @@
         android:layout_height="wrap_content"
         android:background="@color/eventBlue"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Base_ToolbarStyle">
+        android:theme="@style/Base_ToolbarStyle"
+        app:titleTextColor="@color/white"
+        app:subtitleTextColor="@color/white">
 
     </androidx.appcompat.widget.Toolbar>
 
     <fragment
-        android:id="@+id/fragment"
+        android:id="@+id/nav_host_fragment"
         android:layout_below="@id/toolbar"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"

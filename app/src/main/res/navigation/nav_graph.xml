@@ -12,28 +12,44 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_eventListFragment"
-            app:destination="@+id/eventListFragment"
+            app:destination="@id/eventListFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
-            app:popUpTo="@navigation/nav_graph"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:launchSingleTop="false"
+            app:popUpTo="@+id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/eventListFragment"
         android:name="com.mohan.fargoeventboard.fragments.EventListFragment"
-        android:label="fragment_event_list"
-        tools:layout="@layout/fragment_event_list" >
+        android:label="Events"
+        tools:layout="@layout/fragment_event_list">
         <action
             android:id="@+id/action_eventListFragment_to_eventFragment"
-            app:destination="@id/eventFragment" />
+            app:destination="@id/eventFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popUpTo="@+id/eventListFragment" />
     </fragment>
     <fragment
         android:id="@+id/eventFragment"
         android:name="com.mohan.fargoeventboard.fragments.EventFragment"
-        android:label="fragment_event"
+        android:label="{title}"
         tools:layout="@layout/fragment_event" >
         <argument
             android:name="eventId"
             app:argType="integer"
             android:defaultValue="0"/>
+        <argument
+            android:name="title"
+            app:argType="string"/>
     </fragment>
+    <action
+        android:id="@+id/action_global_loginFragment"
+        app:destination="@id/loginFragment"
+        app:enterAnim="@anim/nav_default_enter_anim"
+        app:exitAnim="@anim/nav_default_exit_anim"
+        app:launchSingleTop="false"
+        app:popUpTo="@+id/nav_graph"
+        app:popUpToInclusive="true" />
 </navigation>

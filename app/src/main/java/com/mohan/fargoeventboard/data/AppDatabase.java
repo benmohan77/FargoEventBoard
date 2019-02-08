@@ -15,5 +15,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
     //DAO
     public abstract EventDao eventDao();
+    public abstract SpeakerDao speakerDao();
 
 }

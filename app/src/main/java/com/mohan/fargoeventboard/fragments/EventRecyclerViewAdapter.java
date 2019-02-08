@@ -22,12 +22,10 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
 
     private List<Event> mValues;
     private final OnListFragmentInteractionListener mListener;
-    DateFormat dateFormat;
 
     public EventRecyclerViewAdapter(List<Event> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
-        dateFormat = DateFormat.getDateInstance(DateFormat.LONG);
     }
 
     @Override
@@ -42,8 +40,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         Picasso.get().load(mValues.get(position).getImage_url()).into(holder.mImageView);
         holder.mItem = mValues.get(position);
         holder.mTitleView.setText(mValues.get(position).getTitle());
-        holder.mStartDateView.setText(dateFormat.format(mValues.get(position).getStart_date_time()));
-        holder.mEndDateView.setText(dateFormat.format(mValues.get(position).getEnd_date_time()));
+        holder.mStartDateView.setText(mValues.get(position).getPrettyDate());
     }
 
     @Override
@@ -57,7 +54,6 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
         public final ImageView mImageView;
         public final TextView mTitleView;
         public final TextView mStartDateView;
-        public final TextView mEndDateView;
         public Event mItem;
 
         public ViewHolder(View view) {
@@ -66,7 +62,6 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
             mImageView = (ImageView) view.findViewById(R.id.event_image);
             mTitleView = (TextView) view.findViewById(R.id.event_title);
             mStartDateView = (TextView) view.findViewById(R.id.event_start_date);
-            mEndDateView = (TextView) view.findViewById(R.id.event_end_date);
             view.setOnClickListener(this);
         }
 
@@ -77,7 +72,7 @@ public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecycler
 
         @Override
         public void onClick(View view) {
-            EventListFragmentDirections.ActionEventListFragmentToEventFragment action =  EventListFragmentDirections.actionEventListFragmentToEventFragment();
+            EventListFragmentDirections.ActionEventListFragmentToEventFragment action =  EventListFragmentDirections.actionEventListFragmentToEventFragment(mItem.getTitle());
             action.setEventId(mItem.getId());
             Navigation.findNavController(view).navigate(action);
         }

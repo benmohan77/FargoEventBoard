@@ -27,16 +27,18 @@ public class AppRepository {
 
 
     private final EventDao eventDao;
+    private final SpeakerDao speakerDao;
     private final AppWebService webService;
     private final Executor executor;
 
     public SharedPreferences sharedPreferences;
 
     @Inject
-    public AppRepository(AppWebService webService, EventDao eventDao, Executor executor, SharedPreferences sharedPreferences){
+    public AppRepository(AppWebService webService, EventDao eventDao, SpeakerDao speakerDao, Executor executor, SharedPreferences sharedPreferences){
         this.webService = webService;
         this.eventDao = eventDao;
         this.executor = executor;
+        this.speakerDao = speakerDao;
         this.sharedPreferences = sharedPreferences;
     }
 
@@ -99,6 +101,7 @@ public class AppRepository {
             }
         });
     }
+
 
     /**
      * Currently just fetches all Events from the server regardless of whether or not they already exist.

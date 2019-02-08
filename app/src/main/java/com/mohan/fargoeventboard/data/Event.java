@@ -3,6 +3,9 @@ package com.mohan.fargoeventboard.data;
 import com.google.gson.annotations.Expose;
 
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
@@ -42,7 +45,21 @@ public class Event {
         this.lastRefresh = lastRefresh;
     }
 
+    public String getPrettyDate(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy h:mma");
 
+        Calendar startDate = Calendar.getInstance();
+        Calendar endDate = Calendar.getInstance();
+        startDate.setTime(start_date_time);
+        endDate.setTime(end_date_time);
+        boolean sameDay =  startDate.get(Calendar.YEAR) == endDate.get(Calendar.YEAR) && startDate.get(Calendar.DAY_OF_YEAR) == endDate.get(Calendar.DAY_OF_YEAR);
+        if(sameDay){
+            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mma");
+            return dateFormat.format(start_date_time) + " - " + timeFormat.format(end_date_time);
+        } else {
+            return dateFormat.format(start_date_time) + " - " + dateFormat.format(end_date_time);
+        }
+    }
 
     @NonNull
     public int getId() {
@@ -60,7 +77,6 @@ public class Event {
     public void setLastRefresh(Date lastRefresh) {
         lastRefresh = lastRefresh;
     }
-
 
     public String getImage_url() {
         return image_url;
