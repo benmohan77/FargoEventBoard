@@ -13,7 +13,9 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-
+/**
+ * Application start point. Customized to use Dagger2 Dependency Injection.
+ */
 public class App extends Application implements HasActivityInjector, HasSupportFragmentInjector {
 
     @Inject

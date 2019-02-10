@@ -11,8 +11,12 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.multibindings.IntoMap;
 
+/**
+ * Provides ViewModels for the application.
+ */
 @Module
 public abstract class ViewModelModule {
+
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(FactoryViewModel factory);

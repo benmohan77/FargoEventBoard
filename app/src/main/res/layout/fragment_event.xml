@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.EventFragment">
+
     <ImageView
         android:id="@+id/event_detail_image"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:contentDescription="@string/event_desc" />
 
     <TextView
         android:id="@+id/event_detail_title"
@@ -18,9 +20,10 @@
         android:layout_marginTop="@dimen/event_date_margin"
         android:layout_marginEnd="@dimen/event_date_margin"
         android:layout_marginBottom="@dimen/event_date_margin"
-        android:text="Title"
-        android:textSize="@dimen/string_title"
-        android:textColor="@android:color/primary_text_light"/>
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/string_title" />
 
     <TextView
         android:id="@+id/event_detail_date"
@@ -29,8 +32,7 @@
         android:layout_below="@id/event_detail_title"
         android:layout_marginLeft="@dimen/event_date_margin"
         android:layout_marginRight="@dimen/event_date_margin"
-        android:text="08/07/1997"
-        android:textColor="@android:color/tertiary_text_light"/>
+        android:textColor="@android:color/tertiary_text_light" />
 
 
     <TextView
@@ -38,9 +40,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/event_detail_date"
-        android:layout_margin="@dimen/event_date_margin"
-        android:text="This is the greatest event in the history of all events. If you aren't here you are a chump."
-        android:textColor="@android:color/secondary_text_light"/>
+        android:layout_marginStart="@dimen/event_date_margin"
+        android:layout_marginTop="@dimen/event_date_margin"
+        android:layout_marginEnd="@dimen/event_date_margin"
+        android:layout_marginBottom="@dimen/event_date_margin"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textColor="@android:color/secondary_text_light" />
 
     <Button
         android:id="@+id/location_btn"
@@ -51,7 +57,6 @@
         android:drawableStart="@drawable/location_icon_32"
         android:paddingLeft="@dimen/text_margin"
         android:paddingRight="@dimen/text_margin"
-        android:text="Sanctuary Events Center"
         android:textAlignment="textStart"
         android:textColor="@color/eventBlue" />
 
@@ -65,9 +70,13 @@
         android:background="@color/gray" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/speaker_list"
+        android:name="com.mohan.fargoeventboard.Fragments.EventFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/recycler_view_height"
-        android:layout_below="@+id/divider">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/divider"
+        tools:context=".fragments.EventFragment"
+        tools:listitem="@layout/speaker_entry">
 
     </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

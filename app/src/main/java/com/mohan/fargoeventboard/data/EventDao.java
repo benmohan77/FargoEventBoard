@@ -10,6 +10,9 @@ import androidx.room.Query;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
+/**
+ * Allows access to the database for Event entities.
+ */
 @Dao
 public interface EventDao {
 

@@ -6,6 +6,9 @@ import javax.inject.Inject;
 
 import androidx.lifecycle.ViewModel;
 
+/**
+ * ViewModel that handles data transfer between the AppRepository and the Login page.
+ */
 public class LoginViewModel extends ViewModel {
 
     private AppRepository appRepository;

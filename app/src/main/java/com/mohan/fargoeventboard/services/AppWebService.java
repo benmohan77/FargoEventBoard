@@ -25,5 +25,5 @@ public interface AppWebService {
     Call<Event> getEvent(@Path("id") int id, @Header("Authorization") String token);
 
     @GET("/api/v1/speakers/{id}")
-    Call<List<Speaker>> getSpeakers(@Path("id") String id, @Header("Authorization") String token);
+    Call<Speaker> getSpeaker(@Path("id") int id, @Header("Authorization") String token);
 }

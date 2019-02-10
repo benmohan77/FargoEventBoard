@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
 import java.text.DateFormat;
 import java.util.List;
 
+/**
+ * RecyclerView Adapter for Events for the EventList Fragment.
+ */
 public class EventRecyclerViewAdapter extends RecyclerView.Adapter<EventRecyclerViewAdapter.ViewHolder>{
 
     private List<Event> mValues;

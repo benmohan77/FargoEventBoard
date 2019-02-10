@@ -12,6 +12,9 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
+/**
+ * Room Database entity that represents a speaker at a given event.
+ */
 @Entity(foreignKeys = @ForeignKey(entity = Event.class, parentColumns = "id", childColumns = "event_id", onDelete = CASCADE))
 public class Speaker {
 
@@ -95,3 +98,4 @@ public class Speaker {
         this.eventId = eventId;
     }
 }
+

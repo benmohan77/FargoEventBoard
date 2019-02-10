@@ -1,13 +1,13 @@
 package com.mohan.fargoeventboard.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
@@ -20,14 +20,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mohan.fargoeventboard.R;
-import com.mohan.fargoeventboard.ViewModel.EventListViewModel;
 import com.mohan.fargoeventboard.ViewModel.EventViewModel;
+import com.mohan.fargoeventboard.data.Event;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
 
 public class EventFragment extends Fragment {
+
+    private EventFragment.OnListFragmentInteractionListener mListener;
 
     @Inject
     ViewModelProvider.Factory viewModelFactory;
@@ -51,6 +53,9 @@ public class EventFragment extends Fragment {
     @BindView(R.id.location_btn)
     Button locationButton;
 
+    @BindView(R.id.speaker_list)
+    RecyclerView recyclerView;
+
     public EventFragment() {
         // Required empty public constructor
     }
@@ -72,6 +77,8 @@ public class EventFragment extends Fragment {
         eventId = EventFragmentArgs.fromBundle(getArguments()).getEventId();
         View view = inflater.inflate(R.layout.fragment_event, container, false);
         ButterKnife.bind(this, view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
         return view;
     }
 
@@ -80,6 +87,7 @@ public class EventFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         AndroidSupportInjection.inject(this);
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(EventViewModel.class);
+        //Setup the Event details to display
         viewModel.getEvent(eventId).observe(this, event -> {
             Picasso.get().load(event.getImage_url()).into(imageView);
             titleTextView.setText(event.getTitle());
@@ -87,7 +95,15 @@ public class EventFragment extends Fragment {
             dateTextView.setText(event.getPrettyDate());
             locationButton.setText(event.getLocation());
         });
+        //Setup the speaker to display
+        viewModel.getSpeakers(eventId).observe(this, speakers -> {
+            recyclerView.setAdapter(new SpeakerRecyclerViewAdapter(speakers, mListener));
+        });
 
+    }
+
+    public interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Event event);
     }
 
 }

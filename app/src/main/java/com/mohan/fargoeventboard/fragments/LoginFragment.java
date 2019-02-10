@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,23 +16,26 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.AndroidSupportInjection;
 
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.mohan.fargoeventboard.MainActivity;
 import com.mohan.fargoeventboard.R;
 import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
 import com.mohan.fargoeventboard.data.AppRepository;
 
 import javax.inject.Inject;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
+
 
 public class LoginFragment extends Fragment {
-
-
-    private OnFragmentInteractionListener mListener;
 
     @BindView(R.id.username)
     public EditText usernameInput;
@@ -76,11 +80,32 @@ public class LoginFragment extends Fragment {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
                 viewModel.handleLogin(usernameInput.getText().toString(), passwordInput.getText().toString(), new AppRepository.LoginCallback() {
                     @Override
-                    public void onResponse(Boolean success) {
+                    public void onResponse(Boolean success, ErrorCode errorCode) {
                         if(success){
                           NavigateAndPop(view);
+                        } else{
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    switch(errorCode){
+                                        case LOGIN_FAILED:
+                                            MainActivity.alertDialog.setMessage(getString(R.string.alert_error_login));
+                                            break;
+                                        case INVALID_CREDENTIALS:
+                                            MainActivity.alertDialog.setMessage(getString(R.string.alert_error_credentials));
+                                            break;
+                                        default:
+                                            MainActivity.alertDialog.setMessage(errorCode.toString());
+                                    }
+                                    MainActivity.alertDialog.setTitle(getString(R.string.alert_error_title));
+                                    MainActivity.alertDialog.setPositiveButton(getString(R.string.alert_error_positive), null);
+                                    MainActivity.alertDialog.create().show();
+                                }
+                            });
                         }
                     }
                 });
@@ -101,25 +126,9 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
 
     private void NavigateAndPop(View view){
         Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_eventListFragment);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     @Override
@@ -134,7 +143,4 @@ public class LoginFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
     }
 
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
 }

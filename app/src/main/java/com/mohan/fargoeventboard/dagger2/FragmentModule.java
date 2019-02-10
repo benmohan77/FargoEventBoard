@@ -7,6 +7,9 @@ import com.mohan.fargoeventboard.fragments.LoginFragment;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
+/**
+ * Handles the providing of Fragments for the application.
+ */
 @Module
 public abstract class FragmentModule {
     @ContributesAndroidInjector

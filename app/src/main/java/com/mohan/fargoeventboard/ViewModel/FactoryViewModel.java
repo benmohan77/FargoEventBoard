@@ -11,6 +11,9 @@ import javax.inject.Singleton;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+/**
+ * Class that handles the creation of ViewModels for Dagger2
+ */
 @Singleton
 public class FactoryViewModel implements ViewModelProvider.Factory {
 
@@ -30,21 +33,5 @@ public class FactoryViewModel implements ViewModelProvider.Factory {
             throw new IllegalArgumentException("model class " + modelClass + " not found");
         }
         return (T) creator.get();
-//        if(creator == null){
-//            for(Map.Entry<Class<? extends ViewModel>, Provider<ViewModel>> entry : creators.entrySet()){
-//                if(modelClass.isAssignableFrom(entry.getKey())){
-//                    creator = entry.getValue();
-//                    break;
-//                }
-//            }
-//        }
-//        if(creator == null){
-//            throw new IllegalArgumentException("unknown model " + modelClass);
-//        }
-//        try{
-//            return (T) creator.get();
-//        } catch (Exception e){
-//            throw  new RuntimeException(e);
-//        }
     }
 }

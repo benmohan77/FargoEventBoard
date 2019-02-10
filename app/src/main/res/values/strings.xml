@@ -6,7 +6,11 @@
     <string name="logout">Logout</string>
     <string name="Events">Events</string>
     <string name="EVENT_ID">eventId</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Speaker">Speaker</string>
+    <string name="alert_error_login">Error connecting to server. Login Failed</string>
+    <string name="alert_error_credentials">Credentials are invalid. Only alphanumeric values are allowed, and must be between 4 and 10 characters long.</string>
+    <string name="alert_error_title">Login Failed</string>
+    <string name="alert_error_positive">OK</string>
+    <string name="image_desc">Speaker Image</string>
+    <string name="event_desc">Event Image</string>
 </resources>

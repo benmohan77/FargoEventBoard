@@ -1,10 +1,12 @@
 package com.mohan.fargoeventboard.converters;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import androidx.room.TypeConverter;
 
+/**
+ * Used to handle the conversion of Dates to Strings and back for Room database.
+ */
 public class DateConverter {
 
     @TypeConverter

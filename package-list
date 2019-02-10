@@ -1,0 +1,8 @@
+com.mohan.fargoeventboard
+com.mohan.fargoeventboard.ViewModel
+com.mohan.fargoeventboard.converters
+com.mohan.fargoeventboard.dagger2
+com.mohan.fargoeventboard.data
+com.mohan.fargoeventboard.fragments
+com.mohan.fargoeventboard.fragments.dummy
+com.mohan.fargoeventboard.services

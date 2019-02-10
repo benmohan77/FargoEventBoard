@@ -16,10 +16,7 @@ import android.view.ViewGroup;
 
 import com.mohan.fargoeventboard.R;
 import com.mohan.fargoeventboard.ViewModel.EventListViewModel;
-import com.mohan.fargoeventboard.ViewModel.LoginViewModel;
 import com.mohan.fargoeventboard.data.Event;
-import com.mohan.fargoeventboard.fragments.dummy.DummyContent;
-import com.mohan.fargoeventboard.fragments.dummy.DummyContent.DummyItem;
 
 import javax.inject.Inject;
 
@@ -66,7 +63,6 @@ public class EventListFragment extends Fragment {
         return view;
     }
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
@@ -77,7 +73,6 @@ public class EventListFragment extends Fragment {
         });
 
     }
-
 
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Event event);

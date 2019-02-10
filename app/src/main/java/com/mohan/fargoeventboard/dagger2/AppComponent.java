@@ -11,6 +11,9 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 
+/**
+ * Component that bridges modules to App.
+ */
 @Singleton
 @Component(modules = {ActivityModule.class, FragmentModule.class, AppModule.class, AndroidInjectionModule.class})
 public interface AppComponent {

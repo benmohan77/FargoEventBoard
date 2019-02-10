@@ -1,7 +1,5 @@
 package com.mohan.fargoeventboard.ViewModel;
 
-import android.view.View;
-
 import com.mohan.fargoeventboard.data.AppRepository;
 import com.mohan.fargoeventboard.data.Event;
 
@@ -12,6 +10,9 @@ import javax.inject.Inject;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * ViewModel that handles data transfer between the AppRepository and the EventList page.
+ */
 public class EventListViewModel extends ViewModel {
 
     private AppRepository appRepository;

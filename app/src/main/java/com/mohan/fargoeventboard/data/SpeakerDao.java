@@ -10,6 +10,9 @@ import androidx.room.Query;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
+/**
+ * Allows access to the room database for Speaker entities.
+ */
 @Dao
 public interface SpeakerDao {
 

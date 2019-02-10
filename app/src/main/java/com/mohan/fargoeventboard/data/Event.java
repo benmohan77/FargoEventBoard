@@ -7,11 +7,16 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Room database entity that represents an Event.
+ */
 @Entity
 public class Event {
 
@@ -40,11 +45,22 @@ public class Event {
 
     private Date lastRefresh;
 
+    /**
+     * A list of speaker ids that is used only to establish the connection between speakers and events.
+     * Is not stored. The relationship is established with a foreign key in the database.
+     */
+    @Ignore
+    private List<SpeakerId> speakers;
+
     public Event(@NonNull int id, Date lastRefresh){
         this.id = id;
         this.lastRefresh = lastRefresh;
     }
 
+    /**
+     * Returns a prettified date string.
+     * @return The prettified date span for the event.
+     */
     public String getPrettyDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy h:mma");
 
@@ -124,5 +140,13 @@ public class Event {
 
     public void setEvent_description(String event_description) {
         this.event_description = event_description;
+    }
+
+    public List<SpeakerId> getSpeakers() {
+        return speakers;
+    }
+
+    public void setSpeakers(List<SpeakerId> speakers) {
+        this.speakers = speakers;
     }
 }
